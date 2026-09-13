@@ -1,0 +1,12 @@
+import { requireAuth } from "@/lib/session";
+import { DashboardAnalyticsClient } from "@/components/dashboard/dashboard-analytics-client";
+
+export default async function DashboardPage() {
+  const user = await requireAuth();
+
+  return (
+    <main className="flex-1 p-8 max-w-7xl mx-auto w-full">
+      <DashboardAnalyticsClient userName={user.name || "User"} />
+    </main>
+  );
+}

@@ -1,0 +1,36 @@
+import { requireAuth } from "@/lib/session";
+
+export default async function SettingsPage() {
+  const user = await requireAuth();
+
+  return (
+    <main className="flex-1 p-8 max-w-4xl mx-auto w-full space-y-8">
+      <div>
+        <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
+        <p className="text-muted-foreground mt-2">Manage your account preferences.</p>
+      </div>
+
+      <div className="border rounded-xl p-6 bg-card shadow-sm space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold border-b pb-2 mb-4">Profile Information</h3>
+          <div className="grid gap-4 max-w-sm">
+            <div>
+              <label className="text-sm font-medium text-muted-foreground">Name</label>
+              <p className="mt-1 font-medium">{user.name}</p>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-muted-foreground">Email</label>
+              <p className="mt-1 font-medium">{user.email}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-4">
+          <p className="text-sm text-muted-foreground">
+            Account modification (password reset, email changes) is disabled for this assignment phase.
+          </p>
+        </div>
+      </div>
+    </main>
+  );
+}
