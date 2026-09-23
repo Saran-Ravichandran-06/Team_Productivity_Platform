@@ -33,7 +33,7 @@ Nova is a modern, high-performance Project and Task Management platform designed
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Saran-Ravichandran-06/nova
    cd Nova
    ```
 
