@@ -12,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
           <Link href="/" className="flex items-baseline gap-2.5 group">
             <span className="text-2xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
-              NOVA
+              KNOVA
             </span>
             <span className="text-xs font-medium text-muted-foreground tracking-normal">
               Plan. Collaborate. Deliver.
@@ -109,7 +109,7 @@ export default function Home() {
                 {/* Complete 16:9 Uncropped Image */}
                 <Image
                   src="/images/landing.jpg"
-                  alt="NOVA team collaborating around conference table"
+                  alt="KNOVA team collaborating around conference table"
                   width={728}
                   height={408}
                   priority
@@ -148,7 +148,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full border-t border-border/40 py-6 text-xs text-muted-foreground bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center sm:justify-start">
-          <p>&copy; {new Date().getFullYear()} NOVA Platform. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} KNOVA Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>

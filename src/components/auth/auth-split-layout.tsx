@@ -24,10 +24,10 @@ export function AuthSplitLayout({
           <Link
             href="/"
             className="group inline-flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
-            aria-label="NOVA Home"
+            aria-label="KNOVA Home"
           >
             <span className="text-2xl sm:text-3xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
-              NOVA
+              KNOVA
             </span>
             <span className="text-xs sm:text-sm font-medium text-muted-foreground tracking-normal mt-0.5">
               Plan. Collaborate. Deliver.
@@ -56,7 +56,7 @@ export function AuthSplitLayout({
 
         {/* Footer Area */}
         <footer className="pt-6 sm:pt-8 text-xs text-muted-foreground flex items-center justify-between border-t border-border/40 mt-auto">
-          <span>&copy; {new Date().getFullYear()} NOVA Platform</span>
+          <span>&copy; {new Date().getFullYear()} KNOVA Platform</span>
           <span className="hidden sm:inline">Modern Team Collaboration</span>
         </footer>
       </div>

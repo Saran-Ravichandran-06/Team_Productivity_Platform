@@ -13,7 +13,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <header className="border-b px-6 py-4 flex justify-between items-center bg-card sticky top-0 z-40">
         <div className="flex items-center">
           <Link href="/dashboard" className="mr-4">
-            <h1 className="text-2xl font-bold tracking-tighter text-primary">NOVA</h1>
+            <h1 className="text-2xl font-bold tracking-tighter text-primary">KNOVA</h1>
           </Link>
           <MainNav />
         </div>
