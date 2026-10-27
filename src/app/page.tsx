@@ -36,7 +36,7 @@ export default function Home() {
 
       {/* Main Hero Section */}
       <main className="flex-1 flex items-center justify-center py-8 sm:py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
             
             {/* Left Content Column */}
@@ -120,21 +120,21 @@ export default function Home() {
               <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/10 via-primary/5 to-transparent rounded-3xl blur-3xl -z-10 pointer-events-none" />
 
               {/* Showcase Container */}
-              <div className="relative w-full max-w-[728px] overflow-hidden rounded-2xl border border-border/50 bg-muted shadow-2xl shadow-black/10">
+              <div className="relative w-full max-w-[880px] xl:max-w-[980px] 2xl:max-w-[1040px] overflow-hidden rounded-2xl border border-border/50 bg-muted shadow-2xl shadow-black/10">
                 {/* Complete 16:9 Uncropped Image */}
                 <Image
                   src="/images/landing.jpg"
                   alt="KNOVA team collaborating around conference table"
-                  width={728}
-                  height={408}
+                  width={1040}
+                  height={583}
                   priority
                   className="w-full h-auto aspect-[728/408] object-contain block"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 58vw, 728px"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 65vw, 1040px"
                 />
 
                 {/* Progressive Gradual Blur Overlay on the Left End */}
                 <div
-                  className="absolute inset-y-0 left-0 w-28 sm:w-40 md:w-52 lg:w-64 pointer-events-none z-10"
+                  className="absolute inset-y-0 left-0 w-28 sm:w-44 md:w-56 lg:w-72 xl:w-80 pointer-events-none z-10"
                   style={{
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
@@ -147,7 +147,7 @@ export default function Home() {
 
                 {/* Smooth Seamless Color Fade at the Left End */}
                 <div
-                  className="absolute inset-y-0 left-0 w-20 sm:w-28 md:w-36 lg:w-44 pointer-events-none z-10"
+                  className="absolute inset-y-0 left-0 w-20 sm:w-32 md:w-44 lg:w-56 xl:w-64 pointer-events-none z-10"
                   style={{
                     background:
                       "linear-gradient(to right, var(--background) 0%, color-mix(in oklch, var(--background) 70%, transparent) 40%, transparent 100%)",
