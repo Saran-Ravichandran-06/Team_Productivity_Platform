@@ -108,17 +108,17 @@ export default function Home() {
         </div>
 
         {/* 2. Right Part: Dedicated Image Showcase (Same background as left, no vertical dividing border/fade) */}
-        <div className="w-full lg:w-[50%] flex items-center justify-center lg:justify-start p-6 sm:p-8 lg:py-8 lg:pr-6 lg:pl-0 xl:py-10 xl:pr-8 xl:pl-0 min-h-[460px] bg-background">
-          <div className="relative w-full max-w-[780px] xl:max-w-[850px] 2xl:max-w-[900px] lg:-translate-x-4 xl:-translate-x-6">
+        <div className="w-full lg:w-[50%] flex items-center justify-center lg:justify-start p-6 sm:p-8 lg:py-8 lg:pr-6 lg:pl-0 xl:py-10 xl:pr-8 xl:pl-0 min-h-[480px] bg-background">
+          <div className="relative w-full max-w-[780px] xl:max-w-[850px] 2xl:max-w-[900px] lg:-translate-x-4 xl:-translate-x-6 lg:translate-y-4 xl:translate-y-4">
             {/* Image Container with Proper Dimensions & Aspect Ratio */}
             <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl shadow-black/10 bg-background">
               <Image
                 src="/images/landing.jpg"
                 alt="KNOVA team collaborating around conference table"
                 width={820}
-                height={500}
+                height={535}
                 priority
-                className="w-full h-auto aspect-[728/440] object-cover block rounded-2xl"
+                className="w-full h-auto aspect-[728/475] object-cover object-top block rounded-2xl"
                 sizes="(max-width: 1024px) 100vw, (max-width: 1440px) 55vw, 900px"
               />
             </div>
