@@ -8,14 +8,27 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary/10 selection:text-primary">
       {/* Top Header */}
-      <header className="w-full bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
-          <Link href="/" className="flex items-baseline gap-2.5 group">
-            <span className="text-2xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
+      <header className="w-full bg-background/80 backdrop-blur-md sticky top-0 z-40 py-3 sm:py-2 lg:py-7">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+          <Link
+            href="/"
+            className="flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 gap-y-2 group -translate-x-5 sm:-translate-x-6 md:-translate-x-45"
+          >
+            <span
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors font-brand italic leading-none"
+              style={{
+                fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
+                fontStyle: "italic",
+                fontWeight: 900,
+              }}
+            >
               KNOVA
             </span>
-            <span className="text-xs font-medium text-muted-foreground tracking-normal">
-              Plan. Collaborate. Deliver.
+            <span
+              className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold tracking-tight text-muted-foreground font-switzer leading-none"
+              style={{ fontFamily: "'Switzer', sans-serif" }}
+            >
+              Plan.Collaborate.Deliver
             </span>
           </Link>
         </div>
@@ -30,7 +43,9 @@ export default function Home() {
             <div className="lg:col-span-5 flex flex-col justify-center space-y-6 lg:pr-2">
               {/* Headline */}
               <h1 className="text-2xl sm:text-3xl xl:text-5xl font-bold tracking-tight text-foreground leading-[1.1] inline-block origin-top-left scale-y-[1.2]">
-                Bring your team&apos;s work{" "}
+                <span className="font-switzer" style={{ fontFamily: "'Switzer', sans-serif" }}>
+                  Bring your team&apos;s work{" "}
+                </span>
                 <span className="font-serif italic font-extrabold tracking-wide">
                   Together.
                 </span>
@@ -148,7 +163,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full border-t border-border/40 py-6 text-xs text-muted-foreground bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center sm:justify-start">
-          <p>&copy; {new Date().getFullYear()} KNOVA Platform. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} <span className="font-brand font-semibold italic" style={{ fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif", fontStyle: "italic" }}>KNOVA</span> Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>

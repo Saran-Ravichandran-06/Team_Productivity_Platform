@@ -27,6 +27,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap"
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

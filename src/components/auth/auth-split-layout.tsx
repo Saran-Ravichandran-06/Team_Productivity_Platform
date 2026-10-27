@@ -26,7 +26,13 @@ export function AuthSplitLayout({
             className="group inline-flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
             aria-label="KNOVA Home"
           >
-            <span className="text-2xl sm:text-3xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
+            <span
+              className="text-2xl sm:text-3xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors font-brand italic"
+              style={{
+                fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
+                fontStyle: "italic",
+              }}
+            >
               KNOVA
             </span>
             <span className="text-xs sm:text-sm font-medium text-muted-foreground tracking-normal mt-0.5">
@@ -56,14 +62,14 @@ export function AuthSplitLayout({
 
         {/* Footer Area */}
         <footer className="pt-6 sm:pt-8 text-xs text-muted-foreground flex items-center justify-between border-t border-border/40 mt-auto">
-          <span>&copy; {new Date().getFullYear()} KNOVA Platform</span>
+          <span>&copy; {new Date().getFullYear()} <span className="font-brand font-semibold italic" style={{ fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif", fontStyle: "italic" }}>KNOVA</span> Platform</span>
           <span className="hidden sm:inline">Modern Team Collaboration</span>
         </footer>
       </div>
 
       {/* Right Column: Hero Photograph (45-50% width on tablet/desktop) */}
       <div className="hidden min-[740px]:block min-[740px]:w-[46%] lg:w-[48%] xl:w-[50%] relative border-l border-border/40 bg-muted overflow-hidden">
-        <div className="sticky top-0 h-screen w-full">
+        <div className="relative sticky top-0 h-screen w-full">
           <Image
             src="/images/login.jpg"
             alt="Team collaborating around a shared workspace."
