@@ -58,7 +58,12 @@ export function StatusChart({ data }: StatusChartProps) {
             </Pie>
             <Tooltip 
               formatter={(value: any) => [`${value} Tasks`, "Count"]}
-              contentStyle={{ borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
+              contentStyle={{ 
+                borderRadius: '8px', 
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--card)',
+                color: 'var(--foreground)'
+              }}
             />
             <Legend verticalAlign="bottom" height={36} />
           </PieChart>

@@ -46,12 +46,17 @@ export function PriorityChart({ data }: PriorityChartProps) {
             data={validData}
             margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-            <XAxis dataKey="name" tick={{ fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
-            <YAxis allowDecimals={false} tick={{ fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+            <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)" }} tickLine={false} axisLine={false} />
+            <YAxis allowDecimals={false} tick={{ fill: "var(--muted-foreground)" }} tickLine={false} axisLine={false} />
             <Tooltip 
-              cursor={{ fill: "hsl(var(--muted))", opacity: 0.4 }}
-              contentStyle={{ borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
+              cursor={{ fill: "var(--muted)", opacity: 0.4 }}
+              contentStyle={{ 
+                borderRadius: '8px', 
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--card)',
+                color: 'var(--foreground)'
+              }}
               formatter={(value: any) => [`${value} Tasks`, "Count"]}
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>

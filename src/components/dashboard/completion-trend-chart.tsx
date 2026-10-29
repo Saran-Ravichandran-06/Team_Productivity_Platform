@@ -40,23 +40,28 @@ export function CompletionTrendChart({ data }: CompletionTrendChartProps) {
                 <stop offset="95%" stopColor="var(--color-done, #22c55e)" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
             <XAxis 
               dataKey="displayDate" 
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} 
+              tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} 
               tickLine={false} 
               axisLine={false}
               minTickGap={20}
             />
             <YAxis 
               allowDecimals={false} 
-              tick={{ fill: "hsl(var(--muted-foreground))" }} 
+              tick={{ fill: "var(--muted-foreground)" }} 
               tickLine={false} 
               axisLine={false} 
             />
             <Tooltip 
-              contentStyle={{ borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
-              labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: '500', marginBottom: '4px' }}
+              contentStyle={{ 
+                borderRadius: '8px', 
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--card)',
+                color: 'var(--foreground)'
+              }}
+              labelStyle={{ color: 'var(--foreground)', fontWeight: '500', marginBottom: '4px' }}
               formatter={(value: any) => [`${value} Completed`, "Tasks"]}
             />
             <Area 

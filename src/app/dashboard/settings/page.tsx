@@ -4,7 +4,7 @@ export default async function SettingsPage() {
   const user = await requireAuth();
 
   return (
-    <main className="flex-1 p-8 max-w-4xl mx-auto w-full space-y-8">
+    <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 max-w-4xl mx-auto w-full space-y-8">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
         <p className="text-muted-foreground mt-2">Manage your account preferences.</p>
