@@ -1,9 +1,10 @@
 "use client";
 
 import { TaskCard } from "./task-card";
+import { TaskItem } from "@/types/task";
 
 type TaskListProps = {
-  tasks: any[];
+  tasks: TaskItem[];
   projectId: string;
 };
 

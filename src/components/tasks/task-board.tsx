@@ -3,9 +3,10 @@
 import { TASK_STATUS } from "@/lib/constants";
 import { TaskCard } from "./task-card";
 import { useRouter } from "next/navigation";
+import { TaskItem } from "@/types/task";
 
 type TaskBoardProps = {
-  tasks: any[];
+  tasks: TaskItem[];
   projectId: string;
 };
 

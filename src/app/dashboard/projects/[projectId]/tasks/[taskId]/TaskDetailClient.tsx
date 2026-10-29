@@ -2,18 +2,37 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { TaskStatusBadge } from "@/components/tasks/task-status-badge";
-import { TaskPriorityBadge } from "@/components/tasks/task-priority-badge";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { PriorityBadge } from "@/components/ui/priority-badge";
 import { TaskForm } from "@/components/tasks/task-form";
 import { CommentList } from "@/components/comments/comment-list";
+import { TaskActivityList } from "@/components/activity/task-activity-list";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Edit, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { formatDate, formatRelativeTime, formatDeadline } from "@/lib/date-utils";
+import { TaskItem, TaskProjectMember } from "@/types/task";
 
-export function TaskDetailClient({ projectId, task, members, canEdit, canDelete, currentUserRole, currentUserId }: any) {
+type TaskDetailClientProps = {
+  projectId: string;
+  task: TaskItem;
+  members: TaskProjectMember[];
+  canEdit: boolean;
+  canDelete: boolean;
+  currentUserRole?: string;
+  currentUserId?: string;
+};
+
+export function TaskDetailClient({ 
+  projectId, 
+  task, 
+  members, 
+  canEdit, 
+  canDelete, 
+  currentUserRole = "", 
+  currentUserId = "" 
+}: TaskDetailClientProps) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,7 +51,7 @@ export function TaskDetailClient({ projectId, task, members, canEdit, canDelete,
         alert(data.error || "Failed to delete task");
         setIsDeleting(false);
       }
-    } catch (error) {
+    } catch {
       alert("Error deleting task");
       setIsDeleting(false);
     }
@@ -66,8 +85,8 @@ export function TaskDetailClient({ projectId, task, members, canEdit, canDelete,
         <div>
           <h1 className="text-3xl font-bold break-words">{task.title}</h1>
           <div className="flex items-center gap-3 mt-4">
-            <TaskStatusBadge status={task.status} />
-            <TaskPriorityBadge priority={task.priority} />
+            <StatusBadge status={task.status} />
+            <PriorityBadge priority={task.priority} />
             {deadlineInfo.isOverdue && <span className="text-xs font-medium text-destructive bg-destructive/10 px-2 py-0.5 rounded">Overdue</span>}
             {deadlineInfo.isWarning && <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded">{deadlineInfo.text}</span>}
           </div>
@@ -131,7 +150,7 @@ export function TaskDetailClient({ projectId, task, members, canEdit, canDelete,
 
               <div>
                 <span className="text-muted-foreground block mb-1">Creator</span>
-                <div className="font-medium">{task.creator.name}</div>
+                <div className="font-medium">{task.creator?.name || "Unknown"}</div>
               </div>
 
               <div>
@@ -146,7 +165,9 @@ export function TaskDetailClient({ projectId, task, members, canEdit, canDelete,
             </div>
           </div>
 
-
+          <div className="border rounded-xl p-6 bg-card shadow-sm">
+            <TaskActivityList projectId={projectId} taskId={task.id} />
+          </div>
         </div>
       </div>
 

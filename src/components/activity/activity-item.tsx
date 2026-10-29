@@ -1,6 +1,14 @@
+import { ActivityType } from "@prisma/client";
 import { ActivityIcon } from "./activity-icon";
 
-export function ActivityItem({ activity }: { activity: any }) {
+export interface ActivityItemData {
+  id: string;
+  type: ActivityType;
+  description: string;
+  createdAt: string | Date;
+}
+
+export function ActivityItem({ activity }: { activity: ActivityItemData }) {
   const date = new Date(activity.createdAt).toLocaleString(undefined, {
     month: "short",
     day: "numeric",

@@ -46,7 +46,7 @@ export function ConfirmDialog({
       setIsLoading(true);
       await onConfirm();
       onOpenChange(false);
-    } catch (error) {
+    } catch {
       // Error handling can be managed by the parent
     } finally {
       setIsLoading(false);

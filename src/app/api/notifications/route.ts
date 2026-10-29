@@ -13,8 +13,10 @@ export async function GET(req: Request) {
     const result = await NotificationService.getUserNotifications(user.id, page, pageSize, unreadOnly);
     
     return NextResponse.json(result);
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }

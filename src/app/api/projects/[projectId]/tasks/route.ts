@@ -24,10 +24,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ projectI
 
     const result = await TaskService.listTasks(resolvedParams.projectId, user.id, parsedQuery);
     return NextResponse.json(result);
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.name === "ZodError") return NextResponse.json({ error: "Invalid query parameters", details: error.format() }, { status: 400 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
+      if (error.name === "ZodError") return NextResponse.json({ error: "Invalid query parameters" }, { status: 400 });
+    }
     
     console.error("GET /api/projects/[id]/tasks error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -47,10 +49,12 @@ export async function POST(req: Request, { params }: { params: Promise<{ project
 
     const task = await TaskService.createTask(resolvedParams.projectId, user.id, user.name || "Unknown", result.data);
     return NextResponse.json({ task }, { status: 201 });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.message.startsWith("Bad Request")) return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
+      if (error.message.startsWith("Bad Request")) return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }

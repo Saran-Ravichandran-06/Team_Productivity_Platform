@@ -19,9 +19,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ projectI
     );
 
     return NextResponse.json(result);
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
+    }
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }

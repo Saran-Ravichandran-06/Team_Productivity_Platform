@@ -4,13 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Menu, Bell } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
-
-interface UserProfile {
-  id?: string;
-  name?: string | null;
-  email?: string | null;
-  avatarUrl?: string | null;
-}
+import { UserProfile } from "./nav-config";
 
 interface MobileTopBarProps {
   user: UserProfile;
@@ -43,14 +37,7 @@ export function MobileTopBar({ user }: MobileTopBarProps) {
         </button>
 
         <Link href="/dashboard" className="flex items-baseline gap-2">
-          <span
-            className="text-2xl font-black tracking-tight text-foreground font-brand italic leading-none"
-            style={{
-              fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
-              fontStyle: "italic",
-              fontWeight: 900,
-            }}
-          >
+          <span className="text-2xl font-black tracking-tight text-foreground font-brand italic leading-none">
             KNOVA
           </span>
         </Link>

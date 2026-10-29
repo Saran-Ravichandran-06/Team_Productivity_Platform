@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CreateProjectInput, UpdateProjectInput } from "@/lib/validations";
-import { ActivityType, ProjectRole } from "@prisma/client";
+import { Prisma, ActivityType, ProjectRole, ProjectStatus, ProjectPriority } from "@prisma/client";
 import { canEditProject, canManageProject, getProjectMembership } from "@/lib/permissions";
 import { ActivityService } from "./activity.service";
 
@@ -12,7 +12,7 @@ export class ProjectService {
     userId: string, 
     filters?: { status?: string, priority?: string, search?: string }
   ) {
-    const whereClause: any = {
+    const whereClause: Prisma.ProjectWhereInput = {
       members: {
         some: {
           userId,
@@ -21,11 +21,11 @@ export class ProjectService {
     };
 
     if (filters?.status) {
-      whereClause.status = filters.status;
+      whereClause.status = filters.status as ProjectStatus;
     }
     
     if (filters?.priority) {
-      whereClause.priority = filters.priority;
+      whereClause.priority = filters.priority as ProjectPriority;
     }
 
     if (filters?.search) {

@@ -22,24 +22,28 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ projec
       result.data.role
     );
     return NextResponse.json({ member });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden") || error.message.startsWith("Cannot")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.message.includes("not found")) return NextResponse.json({ error: error.message }, { status: 404 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (error.message.startsWith("Forbidden") || error.message.startsWith("Cannot")) return NextResponse.json({ error: error.message }, { status: 403 });
+      if (error.message.includes("not found")) return NextResponse.json({ error: error.message }, { status: 404 });
+    }
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ projectId: string; memberId: string }> }) {
+export async function DELETE(_req: Request, { params }: { params: Promise<{ projectId: string; memberId: string }> }) {
   try {
     const user = await requireAuth();
     const resolvedParams = await params;
     await ProjectMemberService.removeMember(resolvedParams.projectId, user.id, user.name || "Unknown", resolvedParams.memberId);
     return new NextResponse(null, { status: 204 });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden") || error.message.startsWith("Cannot")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.message.includes("not found")) return NextResponse.json({ error: error.message }, { status: 404 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (error.message.startsWith("Forbidden") || error.message.startsWith("Cannot")) return NextResponse.json({ error: error.message }, { status: 403 });
+      if (error.message.includes("not found")) return NextResponse.json({ error: error.message }, { status: 404 });
+    }
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

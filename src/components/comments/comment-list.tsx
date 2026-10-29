@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { CommentItem } from "./comment-item";
+import { CommentItem, CommentItemData } from "./comment-item";
 import { CommentForm } from "./comment-form";
 
 export function CommentList({
@@ -15,8 +15,34 @@ export function CommentList({
   currentUserRole: string;
   currentUserId: string;
 }) {
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<CommentItemData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const loadComments = async () => {
+      try {
+        const res = await fetch(`/api/projects/${projectId}/tasks/${taskId}/comments`);
+        if (res.ok && !ignore) {
+          const data = await res.json();
+          setComments(data.comments);
+        }
+      } catch (error) {
+        console.error("Failed to load comments", error);
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadComments();
+
+    return () => {
+      ignore = true;
+    };
+  }, [projectId, taskId]);
 
   const fetchComments = useCallback(async () => {
     try {
@@ -31,10 +57,6 @@ export function CommentList({
       setIsLoading(false);
     }
   }, [projectId, taskId]);
-
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
 
   const canEdit = (authorId: string) => {
     if (currentUserRole === "OWNER" || currentUserRole === "ADMIN") return true;

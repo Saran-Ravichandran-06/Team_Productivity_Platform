@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ProjectRole } from "@prisma/client";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addProjectMemberSchema, AddProjectMemberInput } from "@/lib/validations";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -37,7 +37,7 @@ export default function ProjectMembersClient({
   const [memberToRemove, setMemberToRemove] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<AddProjectMemberInput>({
-    resolver: zodResolver(addProjectMemberSchema) as any,
+    resolver: zodResolver(addProjectMemberSchema) as Resolver<AddProjectMemberInput>,
     defaultValues: {
       role: ProjectRole.MEMBER,
     }
@@ -62,7 +62,7 @@ export default function ProjectMembersClient({
         reset();
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred");
     } finally {
       setIsAdding(false);
@@ -84,7 +84,7 @@ export default function ProjectMembersClient({
         const result = await response.json();
         alert(result.error || "Failed to remove member");
       }
-    } catch (err) {
+    } catch {
       alert("Error removing member");
     } finally {
       setMemberToRemove(null);
@@ -107,7 +107,7 @@ export default function ProjectMembersClient({
         const result = await response.json();
         alert(result.error || "Failed to change role");
       }
-    } catch (err) {
+    } catch {
       alert("Error changing role");
     }
   };

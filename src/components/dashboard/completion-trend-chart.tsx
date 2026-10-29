@@ -62,7 +62,7 @@ export function CompletionTrendChart({ data }: CompletionTrendChartProps) {
                 color: 'var(--foreground)'
               }}
               labelStyle={{ color: 'var(--foreground)', fontWeight: '500', marginBottom: '4px' }}
-              formatter={(value: any) => [`${value} Completed`, "Tasks"]}
+              formatter={(value: unknown) => [`${value} Completed`, "Tasks"]}
             />
             <Area 
               type="monotone" 

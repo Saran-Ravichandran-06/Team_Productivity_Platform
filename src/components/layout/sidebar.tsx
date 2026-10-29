@@ -1,74 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
-  FolderKanban,
-  Bell,
-  Settings,
   PanelLeftClose,
   PanelLeft,
   LogOut,
-  User as UserIcon,
 } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
 import { signOut } from "next-auth/react";
-
-interface UserProfile {
-  id?: string;
-  name?: string | null;
-  email?: string | null;
-  avatarUrl?: string | null;
-}
+import { NAV_ITEMS, UserProfile } from "./nav-config";
 
 interface SidebarProps {
   user: UserProfile;
 }
 
-const NAV_ITEMS = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-  { name: "Notifications", href: "/dashboard/notifications", icon: Bell },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-];
-
 export function Sidebar({ user }: SidebarProps) {
-  const { isCollapsed, toggleCollapse } = useSidebar();
+  const { isCollapsed, toggleCollapse, unreadCount } = useSidebar();
   const pathname = usePathname();
-  const [unreadCount, setUnreadCount] = useState(0);
+  const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
-  // Poll for unread notification count
-  useEffect(() => {
-    let isMounted = true;
-    const fetchUnread = async () => {
-      try {
-        const res = await fetch("/api/notifications/unread-count");
-        if (res.ok && isMounted) {
-          const data = await res.json();
-          setUnreadCount(data.count || 0);
-        }
-      } catch {
-        // Silent fail
-      }
-    };
-
-    fetchUnread();
-    const interval = setInterval(fetchUnread, 15000);
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, []);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
       await signOut({ callbackUrl: "/login" });
+      router.push("/login");
     } catch {
-      window.location.href = "/login";
+      router.push("/login");
     }
   };
 
@@ -91,77 +51,61 @@ export function Sidebar({ user }: SidebarProps) {
       }`}
     >
       {/* 1. Brand & Collapse Header */}
-      <div className="h-18 px-4 flex items-center justify-between border-b border-[#3E2C22]/80 shrink-0">
+      <div
+        className={`h-18 flex items-center border-b border-[#3E2C22]/80 shrink-0 ${
+          isCollapsed ? "px-2.5 justify-between" : "px-4 justify-between"
+        }`}
+      >
         {!isCollapsed ? (
-          <Link
-            href="/dashboard"
-            className="flex flex-col justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A] rounded px-1"
-          >
-            <span
-              className="text-2xl font-black tracking-tight text-white group-hover:text-[#EDE1D5] transition-colors font-brand italic leading-none"
-              style={{
-                fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
-                fontStyle: "italic",
-                fontWeight: 900,
-              }}
+          <>
+            <Link
+              href="/dashboard"
+              className="flex flex-col justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A] rounded px-1"
             >
-              KNOVA
-            </span>
-            <span
-              className="text-[11px] font-medium tracking-tight text-[#C5B3A5] font-switzer leading-tight mt-1"
-              style={{ fontFamily: "'Switzer', sans-serif" }}
+              <span className="text-2xl font-black tracking-tight text-white group-hover:text-[#EDE1D5] transition-colors font-brand italic leading-none">
+                KNOVA
+              </span>
+              <span className="text-[11px] font-medium tracking-tight text-[#C5B3A5] font-switzer leading-tight mt-1">
+                Plan.Collaborate.Deliver
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={toggleCollapse}
+              aria-label="Collapse sidebar"
+              aria-expanded={true}
+              className="p-1.5 rounded-lg text-[#D1C2B5] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A]"
+              title="Collapse sidebar"
             >
-              Plan.Collaborate.Deliver
-            </span>
-          </Link>
+              <PanelLeftClose className="h-4 w-4" />
+            </button>
+          </>
         ) : (
-          <Link
-            href="/dashboard"
-            className="w-full flex items-center justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A] rounded py-1"
-            title="KNOVA Dashboard"
-          >
-            <span
-              className="text-2xl font-black text-white group-hover:text-[#EDE1D5] transition-colors font-brand italic leading-none"
-              style={{
-                fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
-                fontStyle: "italic",
-                fontWeight: 900,
-              }}
+          <div className="w-full flex items-center justify-between">
+            <Link
+              href="/dashboard"
+              className="flex items-center justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A] rounded px-1 py-1"
+              title="KNOVA Dashboard"
             >
-              K
-            </span>
-          </Link>
+              <span className="text-2xl font-black text-white group-hover:text-[#EDE1D5] transition-colors font-brand italic leading-none">
+                K
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={toggleCollapse}
+              aria-label="Expand sidebar"
+              aria-expanded={false}
+              className="p-1.5 rounded-lg text-[#D1C2B5] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A]"
+              title="Expand sidebar"
+            >
+              <PanelLeft className="h-4 w-4" />
+            </button>
+          </div>
         )}
-
-        <button
-          type="button"
-          onClick={toggleCollapse}
-          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          aria-expanded={!isCollapsed}
-          className={`p-1.5 rounded-lg text-[#D1C2B5] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A] ${
-            isCollapsed ? "hidden" : "block"
-          }`}
-          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          <PanelLeftClose className="h-4 w-4" />
-        </button>
       </div>
-
-      {/* When collapsed, expand button placed cleanly in sub-header */}
-      {isCollapsed && (
-        <div className="py-2 flex justify-center border-b border-[#3E2C22]/50">
-          <button
-            type="button"
-            onClick={toggleCollapse}
-            aria-label="Expand sidebar"
-            aria-expanded={false}
-            className="p-1.5 rounded-lg text-[#D1C2B5] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A0785A]"
-            title="Expand sidebar"
-          >
-            <PanelLeft className="h-4 w-4" />
-          </button>
-        </div>
-      )}
 
       {/* 2. Primary Navigation */}
       <nav className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">

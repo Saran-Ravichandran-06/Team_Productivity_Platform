@@ -57,7 +57,7 @@ export function StatusChart({ data }: StatusChartProps) {
               ))}
             </Pie>
             <Tooltip 
-              formatter={(value: any) => [`${value} Tasks`, "Count"]}
+              formatter={(value: unknown) => [`${value} Tasks`, "Count"]}
               contentStyle={{ 
                 borderRadius: '8px', 
                 border: '1px solid var(--border)',

@@ -25,10 +25,11 @@ export async function GET(req: NextRequest) {
     const analytics = await AnalyticsService.getDashboardAnalytics(user.id, parsedRange.data as DashboardRange);
     
     return NextResponse.json(analytics);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to fetch dashboard analytics", error);
     
-    if (error.message.includes("Unauthorized") || error.message.includes("Session not found")) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("Unauthorized") || message.includes("Session not found")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     

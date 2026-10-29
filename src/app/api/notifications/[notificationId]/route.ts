@@ -13,8 +13,10 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ notifi
     }
     
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }

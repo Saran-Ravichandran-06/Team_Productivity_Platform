@@ -1,44 +1,77 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { getNotificationIcon, getNotificationLink, formatRelativeTime } from "@/lib/notification-utils";
 import Link from "next/link";
+import { NotificationType } from "@prisma/client";
+
+export type NotificationItem = {
+  id: string;
+  type: NotificationType;
+  message: string;
+  read: boolean;
+  createdAt: string | Date;
+  projectId?: string | null;
+  taskId?: string | null;
+};
 
 export function NotificationsClient() {
-  const [notifications, setNotifications] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "unread">("all");
 
-  const fetchNotifications = useCallback(async (page: number, unreadOnly: boolean, background = false) => {
-    if (!background) setIsLoading(true);
+  const unreadOnly = filter === "unread";
+
+  const refreshList = async () => {
     try {
-      const res = await fetch(`/api/notifications?page=${page}&pageSize=20${unreadOnly ? "&unread=true" : ""}`);
+      const res = await fetch(`/api/notifications?page=${currentPage}&pageSize=20${unreadOnly ? "&unread=true" : ""}`);
       if (res.ok) {
         const data = await res.json();
-        setNotifications(data.data);
-        setPagination(data.pagination);
+        setNotifications(data.data || []);
+        setPagination(data.pagination || { page: 1, totalPages: 1 });
       }
     } catch (error) {
-      console.error("Failed to fetch notifications", error);
-    } finally {
-      if (!background) setIsLoading(false);
+      console.error("Failed to refresh notifications", error);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    fetchNotifications(1, filter === "unread");
-    
-    // Polling every 15 seconds if on page 1
+    let ignore = false;
+
+    const loadNotifications = async (background = false) => {
+      if (!background) setIsLoading(true);
+      try {
+        const res = await fetch(`/api/notifications?page=${currentPage}&pageSize=20${unreadOnly ? "&unread=true" : ""}`);
+        if (res.ok && !ignore) {
+          const data = await res.json();
+          setNotifications(data.data || []);
+          setPagination(data.pagination || { page: 1, totalPages: 1 });
+        }
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+      } finally {
+        if (!ignore && !background) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadNotifications();
+
     const interval = setInterval(() => {
-      if (pagination.page === 1) {
-        fetchNotifications(1, filter === "unread", true);
+      if (currentPage === 1) {
+        loadNotifications(true);
       }
     }, 15000);
 
-    return () => clearInterval(interval);
-  }, [fetchNotifications, filter, pagination.page]);
+    return () => {
+      ignore = true;
+      clearInterval(interval);
+    };
+  }, [currentPage, unreadOnly]);
 
   const markAllAsRead = async () => {
     try {
@@ -47,7 +80,7 @@ export function NotificationsClient() {
         // Optimistically update
         setNotifications(notifications.map(n => ({ ...n, read: true })));
         if (filter === "unread") {
-          fetchNotifications(1, true); // Refresh, should be empty
+          refreshList();
         }
       }
     } catch (error) {
@@ -85,7 +118,10 @@ export function NotificationsClient() {
             <Button
               variant={filter === "all" ? "default" : "ghost"}
               size="sm"
-              onClick={() => setFilter("all")}
+              onClick={() => {
+                setFilter("all");
+                setCurrentPage(1);
+              }}
               className="text-xs h-7"
             >
               All
@@ -93,7 +129,10 @@ export function NotificationsClient() {
             <Button
               variant={filter === "unread" ? "default" : "ghost"}
               size="sm"
-              onClick={() => setFilter("unread")}
+              onClick={() => {
+                setFilter("unread");
+                setCurrentPage(1);
+              }}
               className="text-xs h-7"
             >
               Unread
@@ -163,7 +202,7 @@ export function NotificationsClient() {
             variant="outline" 
             size="sm" 
             disabled={pagination.page <= 1}
-            onClick={() => fetchNotifications(pagination.page - 1, filter === "unread")}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           >
             Previous
           </Button>
@@ -174,7 +213,7 @@ export function NotificationsClient() {
             variant="outline" 
             size="sm" 
             disabled={pagination.page >= pagination.totalPages}
-            onClick={() => fetchNotifications(pagination.page + 1, filter === "unread")}
+            onClick={() => setCurrentPage((p) => p + 1)}
           >
             Next
           </Button>

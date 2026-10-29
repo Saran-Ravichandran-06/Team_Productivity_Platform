@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCommentSchema, CreateCommentInput } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ export function CommentForm({
   const isEdit = !!commentId;
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateCommentInput>({
-    resolver: zodResolver(createCommentSchema) as any,
+    resolver: zodResolver(createCommentSchema) as Resolver<CreateCommentInput>,
     defaultValues: { content: initialContent },
   });
 
@@ -52,7 +52,7 @@ export function CommentForm({
         reset();
         onSuccess();
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred");
     } finally {
       setIsLoading(false);

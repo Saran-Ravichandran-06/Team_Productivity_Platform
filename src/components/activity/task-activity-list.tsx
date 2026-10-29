@@ -1,31 +1,40 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { ActivityTimeline } from "./activity-timeline";
+import { ActivityItemData } from "./activity-item";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export function TaskActivityList({ projectId, taskId }: { projectId: string; taskId: string }) {
-  const [activities, setActivities] = useState<any[]>([]);
+  const [activities, setActivities] = useState<ActivityItemData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchActivity = useCallback(async () => {
-    try {
-      const res = await fetch(`/api/projects/${projectId}/tasks/${taskId}/activity?pageSize=5`);
-      if (res.ok) {
-        const data = await res.json();
-        setActivities(data.data);
-      }
-    } catch (error) {
-      console.error("Failed to load task activity", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [projectId, taskId]);
-
   useEffect(() => {
+    let ignore = false;
+
+    const fetchActivity = async () => {
+      try {
+        const res = await fetch(`/api/projects/${projectId}/tasks/${taskId}/activity?pageSize=5`);
+        if (res.ok && !ignore) {
+          const data = await res.json();
+          setActivities(data.data || []);
+        }
+      } catch (error) {
+        console.error("Failed to load task activity", error);
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    };
+
     fetchActivity();
-  }, [fetchActivity]);
+
+    return () => {
+      ignore = true;
+    };
+  }, [projectId, taskId]);
 
   return (
     <div className="space-y-4">

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ProjectRole } from '@prisma/client';
 import * as permissions from './permissions';
 import { prisma } from './prisma';

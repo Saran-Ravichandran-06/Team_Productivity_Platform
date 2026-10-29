@@ -5,13 +5,7 @@ import { SidebarProvider } from "./sidebar-context";
 import { Sidebar } from "./sidebar";
 import { MobileDrawer } from "./mobile-drawer";
 import { MobileTopBar } from "./mobile-top-bar";
-
-interface UserProfile {
-  id?: string;
-  name?: string | null;
-  email?: string | null;
-  avatarUrl?: string | null;
-}
+import { UserProfile } from "./nav-config";
 
 interface DashboardShellProps {
   user: UserProfile;

@@ -25,7 +25,7 @@ export default function ProjectActions({ projectId, canEdit, canDelete }: { proj
         alert("Failed to delete project");
         setIsDeleting(false);
       }
-    } catch (err) {
+    } catch {
       alert("Error deleting project");
       setIsDeleting(false);
     }

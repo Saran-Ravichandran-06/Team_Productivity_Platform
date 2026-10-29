@@ -14,7 +14,6 @@ export default async function DashboardLayout({
         id: user.id,
         name: user.name,
         email: user.email,
-        avatarUrl: user.avatarUrl,
       }}
     >
       {children}

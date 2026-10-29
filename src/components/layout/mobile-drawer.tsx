@@ -2,63 +2,24 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
-  FolderKanban,
-  Bell,
-  Settings,
   X,
   LogOut,
 } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
 import { signOut } from "next-auth/react";
-
-interface UserProfile {
-  id?: string;
-  name?: string | null;
-  email?: string | null;
-  avatarUrl?: string | null;
-}
+import { NAV_ITEMS, UserProfile } from "./nav-config";
 
 interface MobileDrawerProps {
   user: UserProfile;
 }
 
-const NAV_ITEMS = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-  { name: "Notifications", href: "/dashboard/notifications", icon: Bell },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-];
-
 export function MobileDrawer({ user }: MobileDrawerProps) {
-  const { isMobileOpen, closeMobile } = useSidebar();
+  const { isMobileOpen, closeMobile, unreadCount } = useSidebar();
   const pathname = usePathname();
-  const [unreadCount, setUnreadCount] = useState(0);
+  const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-    const fetchUnread = async () => {
-      try {
-        const res = await fetch("/api/notifications/unread-count");
-        if (res.ok && isMounted) {
-          const data = await res.json();
-          setUnreadCount(data.count || 0);
-        }
-      } catch {
-        // Silent fail
-      }
-    };
-
-    if (isMobileOpen) {
-      fetchUnread();
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [isMobileOpen]);
 
   // Prevent background scroll when mobile drawer is open
   useEffect(() => {
@@ -76,8 +37,9 @@ export function MobileDrawer({ user }: MobileDrawerProps) {
     setIsLoggingOut(true);
     try {
       await signOut({ callbackUrl: "/login" });
+      router.push("/login");
     } catch {
-      window.location.href = "/login";
+      router.push("/login");
     }
   };
 
@@ -117,20 +79,10 @@ export function MobileDrawer({ user }: MobileDrawerProps) {
             onClick={closeMobile}
             className="flex flex-col justify-center"
           >
-            <span
-              className="text-2xl font-black tracking-tight text-white font-brand italic leading-none"
-              style={{
-                fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
-                fontStyle: "italic",
-                fontWeight: 900,
-              }}
-            >
+            <span className="text-2xl font-black tracking-tight text-white font-brand italic leading-none">
               KNOVA
             </span>
-            <span
-              className="text-[11px] font-medium tracking-tight text-[#C5B3A5] font-switzer leading-tight mt-1"
-              style={{ fontFamily: "'Switzer', sans-serif" }}
-            >
+            <span className="text-[11px] font-medium tracking-tight text-[#C5B3A5] font-switzer leading-tight mt-1">
               Plan.Collaborate.Deliver
             </span>
           </Link>

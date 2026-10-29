@@ -17,20 +17,10 @@ export default function Home() {
               href="/"
               className="flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 gap-y-2 group"
             >
-              <span
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors font-brand italic leading-none"
-                style={{
-                  fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif",
-                  fontStyle: "italic",
-                  fontWeight: 900,
-                }}
-              >
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors font-brand italic leading-none">
                 KNOVA
               </span>
-              <span
-                className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold tracking-tight text-muted-foreground font-switzer leading-none"
-                style={{ fontFamily: "'Switzer', sans-serif" }}
-              >
+              <span className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold tracking-tight text-muted-foreground font-switzer leading-none">
                 Plan.Collaborate.Deliver
               </span>
             </Link>
@@ -129,7 +119,7 @@ export default function Home() {
       {/* Footer spanning whole bottom (both left and right part) */}
       <footer className="w-full border-t border-border/40 py-5 text-xs text-muted-foreground bg-background">
         <div className="w-full px-6 sm:px-10 lg:px-16 flex items-center justify-center text-center">
-          <p>&copy; 2026 <span className="font-brand font-semibold italic" style={{ fontFamily: "'Times New Roman MT', 'Times New Roman', Times, serif", fontStyle: "italic" }}>KNOVA</span> Platform. All rights reserved.</p>
+          <p>&copy; 2026 <span className="font-brand font-semibold italic">KNOVA</span> Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>

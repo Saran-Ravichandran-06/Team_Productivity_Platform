@@ -27,29 +27,33 @@ export default async function TasksPage({
 
   const parsedQuery = taskQuerySchema.parse(query);
 
+  let tasksData;
+  let members;
+
   try {
-    const { data: tasks, pagination } = await TaskService.listTasks(resolvedParams.projectId, user.id, parsedQuery);
+    tasksData = await TaskService.listTasks(resolvedParams.projectId, user.id, parsedQuery);
     
     // We also need project members for the assignee dropdowns
-    const members = await prisma.projectMember.findMany({
+    members = await prisma.projectMember.findMany({
       where: { projectId: resolvedParams.projectId },
       include: {
         user: { select: { id: true, name: true, email: true, avatarUrl: true } }
       }
     });
-
-    return (
-      <TaskHubClient 
-        projectId={resolvedParams.projectId} 
-        initialTasks={tasks} 
-        pagination={pagination} 
-        members={members} 
-      />
-    );
-  } catch (error: any) {
-    if (error.message.includes("Forbidden") || error.message.includes("Not Found")) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("Forbidden") || message.includes("Not Found")) {
       notFound();
     }
     throw error;
   }
+
+  return (
+    <TaskHubClient 
+      projectId={resolvedParams.projectId} 
+      initialTasks={tasksData.data} 
+      pagination={tasksData.pagination} 
+      members={members} 
+    />
+  );
 }

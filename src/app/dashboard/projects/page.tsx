@@ -3,7 +3,6 @@ import { ProjectService } from "@/services/project.service";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ProjectFilters } from "@/components/projects/project-filters";
-import { FolderKanban } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { PriorityBadge } from "@/components/ui/priority-badge";
 

@@ -57,7 +57,7 @@ export function PriorityChart({ data }: PriorityChartProps) {
                 backgroundColor: 'var(--card)',
                 color: 'var(--foreground)'
               }}
-              formatter={(value: any) => [`${value} Tasks`, "Count"]}
+              formatter={(value: unknown) => [`${value} Tasks`, "Count"]}
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>
               {validData.map((entry, index) => (

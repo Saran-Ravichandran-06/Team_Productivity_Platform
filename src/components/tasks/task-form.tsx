@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTaskSchema, CreateTaskInput } from "@/lib/validations";
 import { TASK_STATUS, TASK_PRIORITY } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { TaskItem, TaskProjectMember } from "@/types/task";
 
 type TaskFormProps = {
   projectId: string;
-  members: any[];
-  initialData?: any;
+  members: TaskProjectMember[];
+  initialData?: TaskItem;
   onSuccess: () => void;
   onCancel: () => void;
 };
@@ -21,21 +22,21 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
 
   const isEdit = !!initialData;
 
-  const defaultValues: any = {
+  const defaultValues: Partial<CreateTaskInput> = {
     title: initialData?.title || "",
     description: initialData?.description || "",
     status: initialData?.status || TASK_STATUS.TODO,
     priority: initialData?.priority || TASK_PRIORITY.MEDIUM,
-    dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().split('T')[0] : undefined,
+    dueDate: initialData?.dueDate ? new Date(initialData.dueDate) : undefined,
     assigneeId: initialData?.assigneeId || undefined,
   };
 
   const { register, handleSubmit, formState: { errors } } = useForm<CreateTaskInput>({
-    resolver: zodResolver(createTaskSchema) as any,
+    resolver: zodResolver(createTaskSchema) as Resolver<CreateTaskInput>,
     defaultValues,
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: CreateTaskInput) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -59,7 +60,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
       } else {
         onSuccess();
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred");
     } finally {
       setIsLoading(false);

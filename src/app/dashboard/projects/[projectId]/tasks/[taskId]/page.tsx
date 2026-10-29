@@ -13,39 +13,44 @@ export default async function TaskDetailPage({
   const user = await requireAuth();
   const resolvedParams = await params;
 
+  let task;
+  let membership;
+  let members;
+
   try {
-    const task = await TaskService.getTaskById(resolvedParams.projectId, resolvedParams.taskId, user.id);
-    const membership = await getProjectMembership(user.id, resolvedParams.projectId);
+    task = await TaskService.getTaskById(resolvedParams.projectId, resolvedParams.taskId, user.id);
+    membership = await getProjectMembership(user.id, resolvedParams.projectId);
     
     if (!membership) {
       notFound();
     }
 
-    const members = await prisma.projectMember.findMany({
+    members = await prisma.projectMember.findMany({
       where: { projectId: resolvedParams.projectId },
       include: {
         user: { select: { id: true, name: true, email: true, avatarUrl: true } }
       }
     });
-
-    const canEdit = canUpdateTask(membership.role, user.id, task.creatorId, task.assigneeId);
-    const canDelete = canDeleteTask(membership.role, user.id, task.creatorId);
-
-    return (
-      <TaskDetailClient 
-        projectId={resolvedParams.projectId} 
-        task={task} 
-        members={members} 
-        canEdit={canEdit} 
-        canDelete={canDelete}
-        currentUserRole={membership.role}
-        currentUserId={user.id}
-      />
-    );
-  } catch (error: any) {
-    if (error.message.includes("Forbidden") || error.message.includes("Not Found")) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("Forbidden") || message.includes("Not Found")) {
       notFound();
     }
     throw error;
   }
+
+  const canEdit = canUpdateTask(membership.role, user.id, task.creatorId, task.assigneeId);
+  const canDelete = canDeleteTask(membership.role, user.id, task.creatorId);
+
+  return (
+    <TaskDetailClient 
+      projectId={resolvedParams.projectId} 
+      task={task} 
+      members={members} 
+      canEdit={canEdit} 
+      canDelete={canDelete}
+      currentUserRole={membership.role}
+      currentUserId={user.id}
+    />
+  );
 }

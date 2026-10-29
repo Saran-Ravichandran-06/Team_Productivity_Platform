@@ -1,44 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useCallback, useState, useEffect } from "react";
 import { ProjectStatus, ProjectPriority } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useUrlFilters } from "@/hooks/use-url-filters";
 import { Search, X } from "lucide-react";
 
 export function ProjectFilters() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const debouncedSearch = useDebounce(search, 300);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-      return params.toString();
-    },
-    [searchParams]
-  );
-
-  const handleFilterChange = useCallback((key: string, value: string) => {
-    router.push(`${pathname}?${createQueryString(key, value)}`);
-  }, [pathname, router, createQueryString]);
-
-  // Sync debounced search to URL
-  useEffect(() => {
-    const currentUrlSearch = searchParams.get("search") || "";
-    if (debouncedSearch !== currentUrlSearch) {
-      handleFilterChange("search", debouncedSearch);
-    }
-  }, [debouncedSearch, searchParams, handleFilterChange]);
+  const { search, setSearch, searchParams, setFilter, clearFilters } = useUrlFilters("search", 300);
 
   const currentStatus = searchParams.get("status") || "";
   const currentPriority = searchParams.get("priority") || "";
@@ -68,7 +36,7 @@ export function ProjectFilters() {
         <div className="flex flex-wrap gap-3">
           <select
             value={currentStatus}
-            onChange={(e) => handleFilterChange("status", e.target.value)}
+            onChange={(e) => setFilter("status", e.target.value)}
             className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
           >
             <option value="">All Statuses</option>
@@ -79,7 +47,7 @@ export function ProjectFilters() {
 
           <select
             value={currentPriority}
-            onChange={(e) => handleFilterChange("priority", e.target.value)}
+            onChange={(e) => setFilter("priority", e.target.value)}
             className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
           >
             <option value="">All Priorities</option>
@@ -92,7 +60,7 @@ export function ProjectFilters() {
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={() => router.push(pathname)}
+              onClick={clearFilters}
               className="h-9"
             >
               Clear Filters

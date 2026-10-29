@@ -1,51 +1,19 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useCallback, useState, useEffect } from "react";
 import { TASK_STATUS, TASK_PRIORITY } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useUrlFilters } from "@/hooks/use-url-filters";
 import { Search, X } from "lucide-react";
+import { TaskProjectMember } from "@/types/task";
 
 type TaskFiltersProps = {
-  members: any[];
+  members: TaskProjectMember[];
   viewMode: "list" | "board";
   onViewModeChange: (mode: "list" | "board") => void;
 };
 
 export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFiltersProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const debouncedSearch = useDebounce(search, 300);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-      return params.toString();
-    },
-    [searchParams]
-  );
-
-  const handleFilterChange = useCallback((key: string, value: string) => {
-    router.push(`${pathname}?${createQueryString(key, value)}`);
-  }, [pathname, router, createQueryString]);
-
-  // Sync debounced search to URL
-  useEffect(() => {
-    // Check if it's actually different from URL to avoid infinite loops or unnecessary pushes
-    const currentUrlSearch = searchParams.get("search") || "";
-    if (debouncedSearch !== currentUrlSearch) {
-      handleFilterChange("search", debouncedSearch);
-    }
-  }, [debouncedSearch, searchParams, handleFilterChange]);
+  const { search, setSearch, searchParams, setFilter, clearFilters } = useUrlFilters("search", 300);
 
   const currentStatus = searchParams.get("status") || "";
   const currentPriority = searchParams.get("priority") || "";
@@ -92,7 +60,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
       <div className="flex flex-wrap gap-3">
         <select
           value={currentStatus}
-          onChange={(e) => handleFilterChange("status", e.target.value)}
+          onChange={(e) => setFilter("status", e.target.value)}
           className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
         >
           <option value="">All Statuses</option>
@@ -103,7 +71,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
 
         <select
           value={currentPriority}
-          onChange={(e) => handleFilterChange("priority", e.target.value)}
+          onChange={(e) => setFilter("priority", e.target.value)}
           className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
         >
           <option value="">All Priorities</option>
@@ -114,7 +82,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
 
         <select
           value={currentAssignee}
-          onChange={(e) => handleFilterChange("assigneeId", e.target.value)}
+          onChange={(e) => setFilter("assigneeId", e.target.value)}
           className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
         >
           <option value="">All Assignees</option>
@@ -130,7 +98,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => router.push(pathname)}
+            onClick={clearFilters}
             className="h-9"
           >
             Clear Filters

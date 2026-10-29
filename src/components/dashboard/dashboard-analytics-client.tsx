@@ -82,7 +82,7 @@ export function DashboardAnalyticsClient({ userName }: DashboardAnalyticsClientP
         <div className="text-center py-20 border rounded-xl bg-card border-dashed space-y-4">
           <h3 className="text-lg font-medium">No data available yet</h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
-            You don't have any active projects or tasks. Get started by creating a project to see your analytics.
+            You don&apos;t have any active projects or tasks. Get started by creating a project to see your analytics.
           </p>
           <Link href="/dashboard/projects/new">
             <Button>Create your first project</Button>

@@ -8,8 +8,21 @@ import { TaskForm } from "@/components/tasks/task-form";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { TaskItem, TaskProjectMember } from "@/types/task";
 
-export function TaskHubClient({ projectId, initialTasks, pagination, members }: any) {
+type TaskHubClientProps = {
+  projectId: string;
+  initialTasks: TaskItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+  members: TaskProjectMember[];
+};
+
+export function TaskHubClient({ projectId, initialTasks, pagination, members }: TaskHubClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();

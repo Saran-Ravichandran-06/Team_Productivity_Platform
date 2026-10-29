@@ -1,33 +1,43 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { ActivityTimeline } from "@/components/activity/activity-timeline";
+import { ActivityItemData } from "@/components/activity/activity-item";
 import { Button } from "@/components/ui/button";
 
 export function ActivityClient({ projectId }: { projectId: string }) {
-  const [activities, setActivities] = useState<any[]>([]);
+  const [activities, setActivities] = useState<ActivityItemData[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchActivity = useCallback(async (page: number) => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`/api/projects/${projectId}/activity?page=${page}&pageSize=20`);
-      if (res.ok) {
-        const data = await res.json();
-        setActivities(data.data);
-        setPagination(data.pagination);
-      }
-    } catch (error) {
-      console.error("Failed to load activity", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [projectId]);
-
   useEffect(() => {
-    fetchActivity(1);
-  }, [fetchActivity]);
+    let ignore = false;
+
+    const loadActivity = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/api/projects/${projectId}/activity?page=${currentPage}&pageSize=20`);
+        if (res.ok && !ignore) {
+          const data = await res.json();
+          setActivities(data.data);
+          setPagination(data.pagination);
+        }
+      } catch (error) {
+        console.error("Failed to load activity", error);
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadActivity();
+
+    return () => {
+      ignore = true;
+    };
+  }, [projectId, currentPage]);
 
   return (
     <div className="w-full py-2">
@@ -47,7 +57,7 @@ export function ActivityClient({ projectId }: { projectId: string }) {
                 variant="outline" 
                 size="sm" 
                 disabled={pagination.page <= 1}
-                onClick={() => fetchActivity(pagination.page - 1)}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               >
                 Previous
               </Button>
@@ -58,7 +68,7 @@ export function ActivityClient({ projectId }: { projectId: string }) {
                 variant="outline" 
                 size="sm" 
                 disabled={pagination.page >= pagination.totalPages}
-                onClick={() => fetchActivity(pagination.page + 1)}
+                onClick={() => setCurrentPage((p) => p + 1)}
               >
                 Next
               </Button>

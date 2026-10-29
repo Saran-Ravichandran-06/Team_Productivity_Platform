@@ -9,24 +9,41 @@ export function formatDate(dateInput: Date | string | null | undefined): string 
   }).format(date);
 }
 
-export function formatRelativeTime(dateInput: Date | string | null | undefined): string {
+export function formatRelativeTime(
+  dateInput: Date | string | null | undefined,
+  options?: { compact?: boolean }
+): string {
   if (!dateInput) return "";
   
   const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return "";
+
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
   
-  if (diffInSeconds < 60) return "just now";
+  if (diffInSeconds < 60) return options?.compact ? "Just now" : "just now";
   
   const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+  if (diffInMinutes < 60) {
+    return options?.compact
+      ? `${diffInMinutes}m ago`
+      : `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+  }
   
   const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+  if (diffInHours < 24) {
+    return options?.compact
+      ? `${diffInHours}h ago`
+      : `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+  }
   
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays === 1) return "Yesterday";
-  if (diffInDays < 7) return `${diffInDays} days ago`;
+  if (diffInDays < 7) {
+    return options?.compact
+      ? `${diffInDays}d ago`
+      : `${diffInDays} days ago`;
+  }
   
   return formatDate(date);
 }

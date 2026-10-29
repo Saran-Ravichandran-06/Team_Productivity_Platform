@@ -1,6 +1,6 @@
-import { ActivityItem } from "./activity-item";
+import { ActivityItem, ActivityItemData } from "./activity-item";
 
-export function ActivityTimeline({ activities }: { activities: any[] }) {
+export function ActivityTimeline({ activities }: { activities: ActivityItemData[] }) {
   if (!activities || activities.length === 0) {
     return (
       <div className="text-center py-10 border rounded-xl bg-card border-dashed">

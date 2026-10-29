@@ -15,10 +15,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ projectI
     );
 
     return NextResponse.json({ comments });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.message.startsWith("Not Found")) return NextResponse.json({ error: error.message }, { status: 404 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    if (message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (message.startsWith("Forbidden")) return NextResponse.json({ error: message }, { status: 403 });
+    if (message.startsWith("Not Found")) return NextResponse.json({ error: message }, { status: 404 });
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
@@ -44,10 +45,11 @@ export async function POST(req: Request, { params }: { params: Promise<{ project
     );
 
     return NextResponse.json({ comment }, { status: 201 });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (error.message.startsWith("Forbidden")) return NextResponse.json({ error: error.message }, { status: 403 });
-    if (error.message.startsWith("Not Found")) return NextResponse.json({ error: error.message }, { status: 404 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    if (message === "Unauthorized") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (message.startsWith("Forbidden")) return NextResponse.json({ error: message }, { status: 403 });
+    if (message.startsWith("Not Found")) return NextResponse.json({ error: message }, { status: 404 });
     
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }

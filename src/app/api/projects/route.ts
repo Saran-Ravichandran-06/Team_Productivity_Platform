@@ -3,13 +3,13 @@ import { requireAuth } from "@/lib/session";
 import { ProjectService } from "@/services/project.service";
 import { createProjectSchema } from "@/lib/validations";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const user = await requireAuth();
     const projects = await ProjectService.getProjects(user.id);
     return NextResponse.json({ projects });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "Unauthorized") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     console.error("GET /api/projects error:", error);
@@ -34,8 +34,8 @@ export async function POST(req: Request) {
     const project = await ProjectService.createProject(user.id, user.name || "Unknown", result.data);
     
     return NextResponse.json({ project }, { status: 201 });
-  } catch (error: any) {
-    if (error.message === "Unauthorized") {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "Unauthorized") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     console.error("POST /api/projects error:", error);

@@ -1,8 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { CommentForm } from "./comment-form";
-import { Button } from "@/components/ui/button";
+
+export interface CommentItemData {
+  id: string;
+  authorId: string;
+  content: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  author: {
+    name?: string | null;
+    avatarUrl?: string | null;
+  };
+}
 
 export function CommentItem({ 
   comment, 
@@ -12,7 +24,7 @@ export function CommentItem({
   canDelete,
   onUpdate 
 }: { 
-  comment: any; 
+  comment: CommentItemData; 
   projectId: string; 
   taskId: string; 
   canEdit: boolean;
@@ -65,7 +77,14 @@ export function CommentItem({
     <div className="flex gap-4 group">
       <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 overflow-hidden">
         {comment.author.avatarUrl ? (
-          <img src={comment.author.avatarUrl} alt={comment.author.name} className="h-full w-full object-cover" />
+          <Image
+            src={comment.author.avatarUrl}
+            alt={comment.author.name || "User avatar"}
+            width={32}
+            height={32}
+            unoptimized
+            className="h-full w-full object-cover"
+          />
         ) : (
           <span className="text-xs font-medium text-primary">{comment.author.name?.charAt(0) || 'U'}</span>
         )}
