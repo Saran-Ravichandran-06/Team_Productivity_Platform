@@ -24,8 +24,10 @@ export default async function ProjectsPage({
 
   return (
     <div className="flex-1 space-y-4 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 max-w-7xl mx-auto w-full">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 mb-6">
-        <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <span className="text-sm text-muted-foreground">
+          {projects.length} {projects.length === 1 ? "project" : "projects"} in your workspace
+        </span>
         <div className="flex items-center space-x-2">
           <Link href="/dashboard/projects/new">
             <Button>Create Project</Button>

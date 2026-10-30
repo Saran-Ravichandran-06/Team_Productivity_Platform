@@ -4,7 +4,7 @@ import React from "react";
 import { SidebarProvider } from "./sidebar-context";
 import { Sidebar } from "./sidebar";
 import { MobileDrawer } from "./mobile-drawer";
-import { MobileTopBar } from "./mobile-top-bar";
+import { DashboardHeader } from "./dashboard-header";
 import { UserProfile } from "./nav-config";
 
 interface DashboardShellProps {
@@ -24,8 +24,8 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
 
         {/* Main Application Content Container */}
         <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
-          {/* Top header on mobile */}
-          <MobileTopBar user={user} />
+          {/* Common Top Header across all dashboard pages */}
+          <DashboardHeader user={user} />
 
           {/* Main Page Area */}
           <div className="flex-1 min-w-0 flex flex-col">

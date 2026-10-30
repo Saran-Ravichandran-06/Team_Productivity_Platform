@@ -44,10 +44,10 @@ export function DashboardAnalyticsClient({ userName }: DashboardAnalyticsClientP
   return (
     <div className="space-y-8">
       {/* Header & Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight">Welcome back, {userName} 👋</h2>
-          <p className="text-muted-foreground mt-2">Here is your productivity overview.</p>
+          <h2 className="text-xl font-semibold tracking-tight">Welcome back, {userName} 👋</h2>
+          <p className="text-sm text-muted-foreground mt-0.5">Here is your workspace productivity overview.</p>
         </div>
 
         <div className="flex items-center gap-3">
