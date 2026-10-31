@@ -6,7 +6,6 @@ import { TaskList } from "@/components/tasks/task-list";
 import { TaskFilters } from "@/components/tasks/task-filters";
 import { TaskForm } from "@/components/tasks/task-form";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { TaskItem, TaskProjectMember } from "@/types/task";
 
@@ -37,16 +36,9 @@ export function TaskHubClient({ projectId, initialTasks, pagination, members }: 
   };
 
   return (
-    <div className="flex flex-col h-full flex-1 min-h-0">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold tracking-tight">Tasks</h2>
-        <Button onClick={() => setShowCreateForm(true)}>
-          <PlusCircle className="mr-2 h-4 w-4" /> Create Task
-        </Button>
-      </div>
-
+    <div className="flex flex-col flex-1 min-h-0">
       {showCreateForm && (
-        <div className="mb-8">
+        <div className="mb-4">
           <TaskForm 
             projectId={projectId} 
             members={members} 
@@ -59,13 +51,18 @@ export function TaskHubClient({ projectId, initialTasks, pagination, members }: 
         </div>
       )}
 
-      <TaskFilters members={members} viewMode={viewMode} onViewModeChange={setViewMode} />
+      <TaskFilters 
+        members={members} 
+        viewMode={viewMode} 
+        onViewModeChange={setViewMode} 
+        onCreateTask={() => setShowCreateForm(true)}
+      />
 
       <div className="flex-1 min-h-0">
         {viewMode === "board" ? (
           <TaskBoard tasks={initialTasks} projectId={projectId} />
         ) : (
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             <TaskList tasks={initialTasks} projectId={projectId} />
             
             {pagination.totalPages > 1 && (

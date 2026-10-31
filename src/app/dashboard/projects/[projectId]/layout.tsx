@@ -54,10 +54,10 @@ export default async function ProjectLayout({
   return (
     <div className="flex-1 max-w-7xl mx-auto w-full">
       {/* Project Header and Secondary Navigation */}
-      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-xs pt-6 px-4 sm:px-6 lg:px-8 pb-0 border-b border-border mb-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
+      <div className="sticky top-[72px] z-10 bg-background/95 backdrop-blur-xs pt-4 px-4 sm:px-6 lg:px-8 pb-0 border-b border-border mb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
               {project.name}
             </h2>
           </div>
@@ -70,7 +70,7 @@ export default async function ProjectLayout({
         <ProjectNavTabs projectId={project.id} />
       </div>
 
-      <div className="px-4 sm:px-6 lg:px-8 pb-8 space-y-4">
+      <div className="px-4 sm:px-6 lg:px-8 pb-6">
         {children}
       </div>
     </div>
