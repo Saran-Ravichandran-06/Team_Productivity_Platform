@@ -77,7 +77,7 @@ export function TaskDetailClient({
   const deadlineInfo = formatDeadline(task.dueDate, task.status === "DONE");
 
   return (
-    <div className="max-w-5xl mx-auto py-6">
+    <div className="w-full max-w-7xl mx-auto py-6">
 
 
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
@@ -105,8 +105,8 @@ export function TaskDetailClient({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-5 space-y-6">
           <div className="border rounded-xl p-6 bg-card shadow-sm">
             <h3 className="font-semibold text-lg border-b pb-2 mb-4">Description</h3>
             <div className="text-foreground whitespace-pre-wrap">
@@ -149,7 +149,7 @@ export function TaskDetailClient({
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="lg:col-span-7 space-y-6">
           <div className="border rounded-xl p-6 bg-card shadow-sm">
             <CommentList 
               projectId={projectId} 
