@@ -6,7 +6,6 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { PriorityBadge } from "@/components/ui/priority-badge";
 import { TaskForm } from "@/components/tasks/task-form";
 import { CommentList } from "@/components/comments/comment-list";
-import { TaskActivityList } from "@/components/activity/task-activity-list";
 
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
@@ -163,10 +162,6 @@ export function TaskDetailClient({
                 <div className="font-medium">{formatRelativeTime(task.updatedAt)}</div>
               </div>
             </div>
-          </div>
-
-          <div className="border rounded-xl p-6 bg-card shadow-sm">
-            <TaskActivityList projectId={projectId} taskId={task.id} />
           </div>
         </div>
       </div>
