@@ -21,7 +21,7 @@ export function ProjectFilters() {
             placeholder="Search projects..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-background pl-9 pr-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="flex h-9 w-full rounded-md border border-input bg-white pl-9 pr-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
           {search && (
             <button 
@@ -37,7 +37,7 @@ export function ProjectFilters() {
           <select
             value={currentStatus}
             onChange={(e) => setFilter("status", e.target.value)}
-            className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+            className="h-9 rounded-md border border-input bg-white px-3 py-1 text-sm shadow-xs"
           >
             <option value="">All Statuses</option>
             {Object.values(ProjectStatus).map((status) => (
@@ -48,7 +48,7 @@ export function ProjectFilters() {
           <select
             value={currentPriority}
             onChange={(e) => setFilter("priority", e.target.value)}
-            className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+            className="h-9 rounded-md border border-input bg-white px-3 py-1 text-sm shadow-xs"
           >
             <option value="">All Priorities</option>
             {Object.values(ProjectPriority).map((priority) => (

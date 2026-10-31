@@ -75,7 +75,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
         <label className="text-sm font-medium">Title <span className="text-destructive">*</span></label>
         <input 
           {...register("title")} 
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors mt-1" 
+          className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm shadow-sm transition-colors mt-1" 
           disabled={isLoading}
         />
         {errors.title && <p className="text-xs text-destructive mt-1">{errors.title.message}</p>}
@@ -85,7 +85,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
         <label className="text-sm font-medium">Description</label>
         <textarea 
           {...register("description")} 
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors mt-1" 
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm transition-colors mt-1" 
           disabled={isLoading}
         />
         {errors.description && <p className="text-xs text-destructive mt-1">{errors.description.message}</p>}
@@ -96,7 +96,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
           <label className="text-sm font-medium">Status</label>
           <select 
             {...register("status")} 
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors mt-1"
+            className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm shadow-sm transition-colors mt-1"
             disabled={isLoading}
           >
             {Object.values(TASK_STATUS).map(status => (
@@ -110,7 +110,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
           <label className="text-sm font-medium">Priority</label>
           <select 
             {...register("priority")} 
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors mt-1"
+            className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm shadow-sm transition-colors mt-1"
             disabled={isLoading}
           >
             {Object.values(TASK_PRIORITY).map(priority => (
@@ -124,7 +124,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
           <label className="text-sm font-medium">Assignee</label>
           <select 
             {...register("assigneeId")} 
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors mt-1"
+            className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm shadow-sm transition-colors mt-1"
             disabled={isLoading}
           >
             <option value="">Unassigned</option>
@@ -140,7 +140,7 @@ export function TaskForm({ projectId, members, initialData, onSuccess, onCancel 
           <input 
             type="date"
             {...register("dueDate")} 
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors mt-1"
+            className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm shadow-sm transition-colors mt-1"
             disabled={isLoading}
           />
           {errors.dueDate && <p className="text-xs text-destructive mt-1">{errors.dueDate.message}</p>}

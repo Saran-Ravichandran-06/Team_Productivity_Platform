@@ -102,7 +102,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
             id="name"
             type="text"
             {...register("name")}
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+            className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
             disabled={isLoading}
           />
           {errors.name && (
@@ -117,7 +117,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
           <textarea
             id="description"
             {...register("description")}
-            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+            className="flex min-h-[80px] w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
             disabled={isLoading}
           />
           {errors.description && (
@@ -133,7 +133,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
             <select
               id="status"
               {...register("status")}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+              className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
               disabled={isLoading}
             >
               {Object.values(ProjectStatus).map((status) => (
@@ -154,7 +154,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
             <select
               id="priority"
               {...register("priority")}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+              className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
               disabled={isLoading}
             >
               {Object.values(ProjectPriority).map((priority) => (
@@ -179,7 +179,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
               type="date"
               {...register("startDate")}
               defaultValue={formatInitialDate(initialData?.startDate)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+              className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
               disabled={isLoading}
             />
             {errors.startDate && (
@@ -196,7 +196,7 @@ export function ProjectForm({ initialData, onSuccess, onCancel }: ProjectFormPro
               type="date"
               {...register("deadline")}
               defaultValue={formatInitialDate(initialData?.deadline)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+              className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm mt-1"
               disabled={isLoading}
             />
             {errors.deadline && (

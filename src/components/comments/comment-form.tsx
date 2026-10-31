@@ -66,7 +66,7 @@ export function CommentForm({
         <textarea
           {...register("content")}
           placeholder="Leave a comment..."
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           disabled={isLoading}
         />
         {errors.content && <p className="text-xs text-destructive mt-1">{errors.content.message}</p>}

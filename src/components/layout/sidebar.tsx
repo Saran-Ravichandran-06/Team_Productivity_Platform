@@ -148,12 +148,12 @@ export function Sidebar({ user }: SidebarProps) {
                 {item.name === "Notifications" && unreadCount > 0 && (
                   <>
                     {!isCollapsed ? (
-                      <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-[#A0785A] text-white shadow-xs">
+                      <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-black text-white shadow-xs">
                         {unreadCount > 99 ? "99+" : unreadCount}
                       </span>
                     ) : (
                       <span
-                        className="absolute top-2 right-2 size-2 rounded-full bg-[#A0785A] ring-2 ring-[#261B14]"
+                        className="absolute top-2 right-2 size-2 rounded-full bg-black ring-2 ring-[#261B14]"
                         aria-hidden="true"
                       />
                     )}
@@ -169,7 +169,7 @@ export function Sidebar({ user }: SidebarProps) {
                 >
                   <span>{item.name}</span>
                   {item.name === "Notifications" && unreadCount > 0 && (
-                    <span className="bg-[#A0785A] text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">
+                    <span className="bg-black text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">
                       {unreadCount}
                     </span>
                   )}

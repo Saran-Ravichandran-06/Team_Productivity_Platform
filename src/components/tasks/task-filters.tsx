@@ -29,7 +29,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-background pl-9 pr-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="flex h-9 w-full rounded-md border border-input bg-white pl-9 pr-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
           {search && (
             <button 
@@ -44,13 +44,13 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
         <div className="flex gap-2 bg-muted p-1 rounded-md">
           <button
             onClick={() => onViewModeChange("list")}
-            className={`px-3 py-1 text-sm rounded-sm transition-colors ${viewMode === "list" ? "bg-background shadow-sm font-medium" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-3 py-1 text-sm rounded-sm transition-colors ${viewMode === "list" ? "bg-white shadow-xs font-medium" : "text-muted-foreground hover:text-foreground"}`}
           >
             List
           </button>
           <button
             onClick={() => onViewModeChange("board")}
-            className={`px-3 py-1 text-sm rounded-sm transition-colors ${viewMode === "board" ? "bg-background shadow-sm font-medium" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-3 py-1 text-sm rounded-sm transition-colors ${viewMode === "board" ? "bg-white shadow-xs font-medium" : "text-muted-foreground hover:text-foreground"}`}
           >
             Kanban
           </button>
@@ -61,7 +61,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
         <select
           value={currentStatus}
           onChange={(e) => setFilter("status", e.target.value)}
-          className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+          className="h-9 rounded-md border border-input bg-white px-3 py-1 text-sm shadow-xs"
         >
           <option value="">All Statuses</option>
           {Object.values(TASK_STATUS).map((status) => (
@@ -72,7 +72,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
         <select
           value={currentPriority}
           onChange={(e) => setFilter("priority", e.target.value)}
-          className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+          className="h-9 rounded-md border border-input bg-white px-3 py-1 text-sm shadow-xs"
         >
           <option value="">All Priorities</option>
           {Object.values(TASK_PRIORITY).map((priority) => (
@@ -83,7 +83,7 @@ export function TaskFilters({ members, viewMode, onViewModeChange }: TaskFilters
         <select
           value={currentAssignee}
           onChange={(e) => setFilter("assigneeId", e.target.value)}
-          className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+          className="h-9 rounded-md border border-input bg-white px-3 py-1 text-sm shadow-xs"
         >
           <option value="">All Assignees</option>
           <option value="unassigned">Unassigned</option>

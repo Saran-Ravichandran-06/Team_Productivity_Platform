@@ -133,7 +133,7 @@ export function MobileDrawer({ user }: MobileDrawerProps) {
                 <span className="truncate flex-1">{item.name}</span>
 
                 {item.name === "Notifications" && unreadCount > 0 && (
-                  <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-[#A0785A] text-white shadow-xs">
+                  <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-black text-white shadow-xs">
                     {unreadCount > 99 ? "99+" : unreadCount}
                   </span>
                 )}
