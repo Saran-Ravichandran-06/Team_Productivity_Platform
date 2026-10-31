@@ -106,7 +106,7 @@ export function TaskDetailClient({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-6">
           <div className="border rounded-xl p-6 bg-card shadow-sm">
             <h3 className="font-semibold text-lg border-b pb-2 mb-4">Description</h3>
             <div className="text-foreground whitespace-pre-wrap">
@@ -115,20 +115,9 @@ export function TaskDetailClient({
           </div>
 
           <div className="border rounded-xl p-6 bg-card shadow-sm">
-            <CommentList 
-              projectId={projectId} 
-              taskId={task.id} 
-              currentUserRole={currentUserRole}
-              currentUserId={currentUserId}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="border rounded-xl p-6 bg-card shadow-sm">
-            <h3 className="font-semibold border-b pb-2 mb-4">Details</h3>
+            <h3 className="font-semibold text-lg border-b pb-2 mb-4">Details</h3>
             
-            <div className="space-y-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm">
               <div>
                 <span className="text-muted-foreground block mb-1">Assignee</span>
                 <div className="font-medium flex items-center gap-2">
@@ -148,20 +137,26 @@ export function TaskDetailClient({
               </div>
 
               <div>
-                <span className="text-muted-foreground block mb-1">Creator</span>
-                <div className="font-medium">{task.creator?.name || "Unknown"}</div>
-              </div>
-
-              <div>
-                <span className="text-muted-foreground block mb-1">Created</span>
+                <span className="text-muted-foreground block mb-1">Created At</span>
                 <div className="font-medium">{formatRelativeTime(task.createdAt)}</div>
               </div>
               
               <div>
-                <span className="text-muted-foreground block mb-1">Last Updated</span>
+                <span className="text-muted-foreground block mb-1">Last Update</span>
                 <div className="font-medium">{formatRelativeTime(task.updatedAt)}</div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="border rounded-xl p-6 bg-card shadow-sm">
+            <CommentList 
+              projectId={projectId} 
+              taskId={task.id} 
+              currentUserRole={currentUserRole}
+              currentUserId={currentUserId}
+            />
           </div>
         </div>
       </div>
